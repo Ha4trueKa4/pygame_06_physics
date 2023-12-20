@@ -1,4 +1,3 @@
-import os
 import random
 import pygame
 
@@ -16,10 +15,10 @@ class Ball(pygame.sprite.Sprite):
 
     def update(self):
         self.rect = self.rect.move(self.vx, self.vy)
-        # если пересекает горизонтальные границы, меняем y-компоненту
-        # вектора скорости на противоположную (отражаем по оси x)
-
-        # если вертикальные - меняем x-компоненту (отражаем по y)
+        if pygame.sprite.spritecollideany(self, horizontal_borders):
+            self.vy = -self.vy
+        if pygame.sprite.spritecollideany(self, vertical_borders):
+            self.vx = -self.vx
 
 
 class Border(pygame.sprite.Sprite):
@@ -44,9 +43,13 @@ size = width, height = 400, 300
 screen = pygame.display.set_mode(size)
 
 
-# ... инициализируем нижнюю, верхнюю, левую и правую границы ...
+Border(5, 5, width - 5, 5)
+Border(5, height - 5, width - 5, height - 5)
+Border(5, 5, 5, height - 5)
+Border(width - 5, 5, width - 5, height - 5)
 
-# ... инициализируем 10 шаров ...
+for i in range(10):
+    Ball(20, 100, 100)
 
 clock = pygame.time.Clock()
 

@@ -47,9 +47,8 @@ class Landing(pygame.sprite.Sprite):
         self.rect.y = pos[1]
 
     def update(self):
-        # если не пересеклись со спрайтом горы (по маске),
-        # опускаем парашютиста вниз на 1 пиксель
-        raise NotImplementedError()
+        if not pygame.sprite.collide_mask(self, mountain):
+            self.rect = self.rect.move(0, 1)
 
 
 all_sprites = pygame.sprite.Group()

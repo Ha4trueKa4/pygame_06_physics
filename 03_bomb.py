@@ -41,15 +41,16 @@ class Bomb(pygame.sprite.Sprite):
                 break
 
     def process_event(self, event):
-        # если спрайт содержит точку с координатами event.pos, взрываемся
-        raise NotImplementedError()
+        if self.rect.x <= event.pos[0] <= self.rect.x + self.rect.width \
+                and self.rect.y <= event.pos[1] <= self.rect.y + self.rect.height:
+            self.image = Bomb.image_boom
 
 
 # группа, содержащая все спрайты
 all_sprites = pygame.sprite.Group()
 
-
-# ... инициализируем 10 бомбочек ...
+for i in range(10):
+    _ = Bomb(all_sprites)
 
 
 running = True
@@ -59,7 +60,7 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             for bomb in all_sprites:
-                bomb.get_event(event)
+                bomb.process_event(event)
     screen.fill(pygame.Color("black"))
     all_sprites.draw(screen)
     pygame.display.flip()
